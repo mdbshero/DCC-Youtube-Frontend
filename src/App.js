@@ -1,6 +1,7 @@
 import react, { useState, useEffect } from "react";
 import axios from "axios";
 import VideoPlayer from "./Components/VideoPlayer/VideoPlayer"
+import SearchBar from "./Components/SearchBar/SearchBar"
 
 
 
@@ -8,6 +9,7 @@ import VideoPlayer from "./Components/VideoPlayer/VideoPlayer"
 
 function App() {
 const [query, setQuery] = useState("");
+const [videoID, setVideoID] = useState("")
 
 
 
@@ -16,6 +18,7 @@ const [query, setQuery] = useState("");
 
   return (
     <div>
+      <SearchBar />
       <VideoPlayer />
     </div>
   );
