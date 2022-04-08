@@ -7,7 +7,7 @@ const VideoPlayer = () => {
         width="640"
         height="360"
         src="https://www.youtube.com/embed/aWzlQ2N6qqg"
-        frameborder="0"
+        frameBorder="0"
       ></iframe>
     </div>
   );

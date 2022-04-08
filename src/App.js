@@ -18,9 +18,9 @@ function parseSearch(text){
 }
 const example = async (text) => {
   // console.log(text)
-  // const KEY = process.env
-  // console.log(KEY
-  let videoSearch = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${text}&key=AIzaSyBt6EfMcMESZiSBQ_V7V9TBcOziV2zfx84`)
+  const KEY = process.env.REACT_APP_KEY
+  console.log(KEY)
+  let videoSearch = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`)
   
   console.log(videoSearch.data)
   console.log(videoSearch.data.items[0].id.videoId)
