@@ -4,6 +4,7 @@ import axios from "axios";
 import VideoPlayer from "./Components/VideoPlayer/VideoPlayer"
 import SearchBar from "./Components/SearchBar/SearchBar"
 import RelatedVideos from "./Components/RelatedVideos/RelatedVideos";
+import CommentSection from "./Components/CommentSection/CommentSection";
 
 
 
@@ -43,6 +44,7 @@ const relatedVideos = async (searchString = videoID) => {
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
       <RelatedVideos videoId={videoID}/>
+      <CommentSection />
     </div>
   );
 }
