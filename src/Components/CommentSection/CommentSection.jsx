@@ -7,31 +7,42 @@ const CommentSection = (props) => {
   const [comments, setComments] = useState([''])
     
 
-  const commentSniffer = async () => {
+  const commentSniffer =  () => {
     let text = []
     // let commentSection = await axios.get(`http://localhost:3001/api/${props.videoId}`)
-    let commentSection = await axios.get(`http://localhost:3001/api/1`)
-    for (let i = 0; i < commentSection.data.length; i++){
-      // console.log(commentSection.data[i].text)
-      text.push(commentSection.data[i].text)
-      // setComments([...comments, commentSection.data[i].text], console.log(`comments: ${comments}`))
-    }
-    let example = [...text]
-    // console.log(`Example: ${example}`)
-    // console.log(`text: ${text}`)
-    // setComments(example,console.log(comments))
+    // let commentSection = axios.get(`http://localhost:3001/api/1`)
+    axios.get(`http://localhost:3001/api/aWzlQ2N6qqg`)
+    .then((test) => {
+      // console.log(test.data)
+      // console.log(test)
+      for (let i = 0; i < test.data.length; i++){
+        // console.log(test.data[i].text)
+        text.push(test.data[i].text)
+        // setComments([...comments, commentSection.data[i].text], console.log(`comments: ${comments}`))
+      }
+      // let example = [...text]
+      // console.log(`Example: ${example}`)
+      // console.log(`text: ${text}`)
+      // setMovies(prevMovies => ([...prevMovies, ...result]));
+      console.log(text)
+      setComments(text =>  ([...text]))
+      console.log(comments)
+      
+      // setComments(example,console.log(comments))
+      // console.log(test)
+      // console.log(`comments: ${comments}`)
+    })
     return (text)
-    // console.log(test)
-    // console.log(`comments: ${comments}`)
   }
 
-useEffect( async () => {
-    let commentsTemp = await commentSniffer();
-    console.log(commentsTemp)
-    setComments([...commentsTemp])
-    console.log(`comments: ${comments}`)
+useEffect(
+  commentSniffer()
+    // let commentsTemp = await commentSniffer();
+    // console.log(commentsTemp)
+    // setComments([...commentsTemp])
+    // console.log(`comments: ${comments}`)
     // console.log(comments)
-  }, []);
+    );
 
 function handleComments(text){
 }
