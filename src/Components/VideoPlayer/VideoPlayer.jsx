@@ -1,4 +1,7 @@
-const VideoPlayer = () => {
+// import React, { useState } from 'react';
+
+
+const VideoPlayer = (props) => {
   return (
     <div>
       <iframe
@@ -6,7 +9,7 @@ const VideoPlayer = () => {
         type="text/html"
         width="640"
         height="360"
-        src="https://www.youtube.com/embed/aWzlQ2N6qqg"
+        src={`https://www.youtube.com/embed/${props.videoId}`}
         frameBorder="0"
       ></iframe>
     </div>
