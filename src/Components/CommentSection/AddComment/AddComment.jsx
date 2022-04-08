@@ -5,9 +5,9 @@ const AddComment = (props) => {
         <div>
           <input
             type="text"
-            value={props.comment}
+            // value={props.comment}
             placeholder="Comment"
-            onChange={(e) => props.handleChange(e)}
+            onChange={(e) => props.setNewComment(e.target.value)}
           />
         </div>
         <button type="submit">Create</button>

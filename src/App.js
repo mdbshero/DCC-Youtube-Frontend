@@ -22,6 +22,9 @@ const parseSearch = async (text) => {
   setVideoID(videoSearch.data.items[0].id.videoId)
   relatedVideos(videoSearch.data.items[0].id.videoId)
 }
+
+
+//WHY ARE SET STATE VARIABLES SO SLOW
 const relatedVideos = async (searchString = videoID) => {
   // setRelatedVideoID([])
   let test = []
@@ -34,7 +37,8 @@ const relatedVideos = async (searchString = videoID) => {
     test.push(relatedVideo.data.items[i].id.videoId)
   }
   console.log(test)
-  setRelatedVideoID(...test)
+  console.log(`Hullabloo : ${relatedVideoID}`)
+  setRelatedVideoID([...test])
   console.log(relatedVideoID)
 }
 
@@ -43,8 +47,8 @@ const relatedVideos = async (searchString = videoID) => {
     <div>
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
-      <RelatedVideos videoId={videoID}/>
-      <CommentSection />
+      <RelatedVideos relatedVideoID={videoID}/>
+      <CommentSection videoId={videoID}/>
     </div>
   );
 }
