@@ -13,6 +13,7 @@ import CommentSection from "./Components/CommentSection/CommentSection_bkup";
 function App() {
 const [videoID, setVideoID] = useState("aWzlQ2N6qqg")
 const [relatedVideoID, setRelatedVideoID] = useState([])
+const [comments, setComments] = useState([''])
 
 ///WHEN YOU SEARCH FOR "DAFT" or "DAFT PUNK" it will return a channel first, which causes it to break. 
 //Add proper functionality to prevent this
@@ -21,8 +22,19 @@ const parseSearch = async (text) => {
   let videoSearch = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`)
   setVideoID(videoSearch.data.items[0].id.videoId)
   relatedVideos(videoSearch.data.items[0].id.videoId)
+  commentSniffer(videoSearch.data.items[0].id.videoId)
 }
 
+
+const commentSniffer = async (searchString = videoID) => {
+  let text = []
+  let commentSection = await axios.get(`http://localhost:3001/api/${searchString}`)
+  for (let i = 0; i < commentSection.data.length; i++){
+    text.push(commentSection.data[i].text)
+  }
+  console.log(`text: ${text}`)
+  setComments([...text])
+}
 
 
 
@@ -50,7 +62,7 @@ const relatedVideos = async (searchString = videoID) => {
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
       <RelatedVideos relatedVideoID={videoID}/>
-      <CommentSection videoId={videoID}/>
+      <CommentSection videoId={videoID} commentSniffer={commentSniffer} comments={comments}/>
     </div>
   );
 }

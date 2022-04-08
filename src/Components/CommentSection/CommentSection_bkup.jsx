@@ -4,23 +4,23 @@ import axios from "axios";
 
 const CommentSection = (props) => {
   const [newComment, setNewComment] = useState();
-  const [comments, setComments] = useState([''])
+  // const [comments, setComments] = useState([''])
   // const [comments, setComments] = useState()
     
 
-  const commentSniffer = async () => {
-    let text = []
-    let commentSection = await axios.get(`http://localhost:3001/api/${props.videoId}`)
-    for (let i = 0; i < commentSection.data.length; i++){
-      text.push(commentSection.data[i].text)
-    }
-    console.log(`text: ${text}`)
-    setComments([...text])
-  }
+  // const commentSniffer = async () => {
+  //   let text = []
+  //   let commentSection = await axios.get(`http://localhost:3001/api/${props.videoId}`)
+  //   for (let i = 0; i < commentSection.data.length; i++){
+  //     text.push(commentSection.data[i].text)
+  //   }
+  //   console.log(`text: ${text}`)
+  //   setComments([...text])
+  // }
 
   
   useEffect(() => {
-    commentSniffer()
+    props.commentSniffer()
   }, [])
 
 
@@ -40,7 +40,7 @@ function handleComments(text){
     });
 
     document.getElementById('commentInputField').value = ''
-    commentSniffer()
+    props.commentSniffer()
   };
 
   return (
@@ -56,7 +56,7 @@ function handleComments(text){
         </thead>
         <tbody>
           {/* {comments && comments.map((comment, index) => { */}
-          {comments.map((comment, index) => {
+          {props.comments.map((comment, index) => {
            return <tr key={index}><td>{comment}</td></tr>;
           //  {console.log("MAking it here as well")}
           })}
