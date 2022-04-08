@@ -3,6 +3,7 @@ import react, { useState, useEffect } from "react";
 import axios from "axios";
 import VideoPlayer from "./Components/VideoPlayer/VideoPlayer"
 import SearchBar from "./Components/SearchBar/SearchBar"
+import CommentSection from "./Components/CommentSection/CommentSection";
 
 
 
@@ -29,6 +30,7 @@ const example = async (text) => {
     <div>
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
+      <CommentSection />
     </div>
   );
 }
