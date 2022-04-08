@@ -24,6 +24,8 @@ const parseSearch = async (text) => {
 }
 
 
+
+
 //WHY ARE SET STATE VARIABLES SO SLOW
 const relatedVideos = async (searchString = videoID) => {
   // setRelatedVideoID([])

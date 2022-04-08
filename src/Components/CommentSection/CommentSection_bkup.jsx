@@ -10,51 +10,37 @@ const CommentSection = (props) => {
 
   const commentSniffer = async () => {
     let text = []
-    // let commentSection = await axios.get(`http://localhost:3001/api/${props.videoId}`)
-    // let commentSection = await axios.get(`http://localhost:3001/api/1`)
-    let commentSection = await axios.get(`http://localhost:3001/api/aWzlQ2N6qqg`)
+    let commentSection = await axios.get(`http://localhost:3001/api/${props.videoId}`)
     for (let i = 0; i < commentSection.data.length; i++){
-      // console.log(commentSection.data[i].text)
       text.push(commentSection.data[i].text)
-      // setComments([...comments, commentSection.data[i].text], console.log(`comments: ${comments}`))
     }
-    // let example = [...text]
-    // console.log(`Example: ${example}`)
     console.log(`text: ${text}`)
-    // setComments(example,console.log(comments))
     setComments([...text])
-    // return (text)
-    // console.log(test)
   }
 
+  
   useEffect(() => {
     commentSniffer()
-
   }, [])
 
-
-// useEffect( async () => {
-//     let commentsTemp = await commentSniffer();
-//     console.log(commentsTemp)
-//     setComments([...commentsTemp])
-//     console.log(`comments: ${comments}`)
-//   }, []);
 
 function handleComments(text){
 }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(comments)
-    // commentSniffer()
-    // const addComment = {
-    //   comment: newComment.comment,
-    //   videoId: newComment.videoId
-    // };
-    // axios.post("http://localhost:3001/api/", addComment).then((response) => {
-    //   console.log(response.status);
-    //   console.log(response.data.token);
-    // });
+    const addComment = {
+      text: newComment,
+      videoId: props.videoId
+    };
+
+    await axios.post("http://localhost:3001/api/", addComment).then((response) => {
+      console.log(response.status);
+      console.log(response.data.token);
+    });
+
+    document.getElementById('commentInputField').value = ''
+    commentSniffer()
   };
 
   return (
@@ -71,7 +57,6 @@ function handleComments(text){
         <tbody>
           {/* {comments && comments.map((comment, index) => { */}
           {comments.map((comment, index) => {
-            {console.log(`tr/td = ${comment}`)}
            return <tr key={index}><td>{comment}</td></tr>;
           //  {console.log("MAking it here as well")}
           })}

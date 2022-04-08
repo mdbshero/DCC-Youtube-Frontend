@@ -7,10 +7,11 @@ const AddComment = (props) => {
             type="text"
             // value={props.comment}
             placeholder="Comment"
+            id='commentInputField'
             onChange={(e) => props.setNewComment(e.target.value)}
           />
         </div>
-        <button type="submit">Create</button>
+        <button type="submit" id='submitCommentButton'>Create</button>
       </form>
     </div>
   );
