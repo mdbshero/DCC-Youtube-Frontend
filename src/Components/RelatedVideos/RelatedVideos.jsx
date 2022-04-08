@@ -1,2 +1,19 @@
+import React, { useState } from 'react';
 
-src="https://img.youtube.com/vi/6qiMlcAnurQ/default.jpg"
+const RelatedVideos = (props) => {    
+        // src="https://img.youtube.com/vi/6qiMlcAnurQ/default.jpg"
+    return (  
+        <div>
+        <iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.videoId}/default.jpg`} frameBorder="0"/>
+        <iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.videoId}/default.jpg`} frameBorder="0"/>
+        <iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.videoId}/default.jpg`} frameBorder="0"/>
+        <iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.videoId}/default.jpg`} frameBorder="0"/>
+        <iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.videoId}/default.jpg`} frameBorder="0"/>
+        </div>
+
+
+        
+    );
+}
+ 
+export default RelatedVideos;
