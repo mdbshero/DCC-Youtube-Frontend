@@ -60,6 +60,37 @@ function handleComments(text){
     props.commentSniffer()
   };
 
+
+  const handleLikes = async (event,comment) => {
+    event.preventDefault()
+    console.log(JSON.stringify(comment))
+      let newLikes = {text:comment.text,
+        videoId:comment.videoId,
+        likes:comment.likes += 1}
+
+      await axios.put(`http://localhost:3001/api/${comment.key}`, newLikes).then((response) => {
+        console.log(response.status);
+        console.log(response.data.token);
+        props.commentSniffer()
+      });
+
+
+  }
+
+  const handleDislikes = async (event,comment) => {
+    event.preventDefault()
+    console.log("TEST TEST TEST")
+    let newDislikes = {text:comment.text,
+      videoId:comment.videoId,
+      dislikes:comment.dislikes += 1}
+      console.log(JSON.stringify(newDislikes))
+    await axios.put(`http://localhost:3001/api/${comment.key}`, newDislikes).then((response) => {
+      console.log(response.status);
+      console.log(response.data.token);
+      props.commentSniffer()
+    });
+  }
+
   return (
     <div>
       <div>
@@ -76,8 +107,8 @@ function handleComments(text){
         <tbody>
           {props.comments.map((comment, index) => {
            return <tr key={index}>
-             <td>{comment.text}</td>
-             {console.log(comment)}
+             <td>{comment.text}     <button name={`likebutton${index}`} onClick={(event) =>handleLikes(event, comment)}>/\</button><label htmlFor={`likebutton${index}`}>{comment.likes}</label><button name={`dislikebutton${index}`} onClick={(event) => handleDislikes(event,comment)}>\/</button><label htmlFor={`dislikebutton${index}`}>{comment.dislikes}</label></td>
+             {/* {console.log(comment)} */}
              <td>{comment.replies}</td>
              <td> <AddReply handleSubmitReply={handleSubmitReply} setReply={setReply} index={comment.key} /> </td>
              </tr>;

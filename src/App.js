@@ -54,11 +54,14 @@ function App() {
       text.push({
         text: commentSection.data[i].text,
         key: commentSection.data[i]._id,
+        videoId:commentSection.data[i].videoId,
         replies: commentSection.data[i].replies.map((entry) => {return entry.text}),
+        likes: commentSection.data[i].likes,
+        dislikes: commentSection.data[i].dislikes,
       });
       // objComments.push(commentSection.data[i]._id)
     }
-    console.log(`text: ${text}`)
+    // console.log(`text: ${text}`)
     setComments([...text]);
     // setCommentList([...objComments])
     // console.log(objComments)
