@@ -60,6 +60,7 @@ function App() {
               text: entry.text,
               likes: entry.likes,
               dislikes: entry.dislikes,
+              id:entry._id
             });
           }),
         likes: commentSection.data[i].likes,

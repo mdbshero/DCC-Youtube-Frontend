@@ -96,6 +96,38 @@ const CommentSection = (props) => {
       });
   };
 
+  const handleLikesReply = async (event, comment,reply) => {
+    event.preventDefault();
+    let newLikes = {
+      text: reply.text,
+      likes: (reply.likes += 1),
+    };
+    console.log(newLikes)
+
+    await axios
+      .put(`http://localhost:3001/api/${comment.key}/replies/${reply.id}`, newLikes)
+      .then((response) => {
+        console.log(response.status);
+        console.log(response.data.token);
+        props.commentSniffer();
+      });
+  };
+
+  const handleDislikesReply = async (event, comment,reply) => {
+    event.preventDefault();
+    let newDislikes = {
+      text: reply.text,
+      dislikes: (reply.dislikes += 1),
+    };
+    await axios
+      .put(`http://localhost:3001/api/${comment.key}/replies/${reply.id}`, newDislikes)
+      .then((response) => {
+        console.log(response.status);
+        console.log(response.data.token);
+        props.commentSniffer();
+      });
+  };
+
   return (
     <div>
       <div>
@@ -137,12 +169,26 @@ const CommentSection = (props) => {
                     {comment.dislikes}
                   </label>
                 </td>
-                {console.log(`COMMENT: ${JSON.stringify(comment.replies)}`)}
                 <td>{comment.replies.map((reply, replyIndex) =>{
+                // {console.log(`COMMENT: ${JSON.stringify(comment.key)} AND \n REPLY: ${JSON.stringify(reply.id)}`)}
                     // {console.log(JSON.stringify(reply))}
                   return (
                     <div key={replyIndex}>
-                      {reply.text}
+                      {reply.text}            
+                       <button
+                    name={`likebuttonReply${replyIndex}`}
+                    onClick={(event) => handleLikesReply(event, comment,reply)}>
+                    /\
+                  </button>
+                  <label htmlFor={`likebuttonReply${replyIndex}`}>{reply.likes}</label>
+                  <button
+                    name={`dislikebuttonReply${replyIndex}`}
+                    onClick={(event) => handleDislikesReply(event, comment,reply)}>
+                    \/
+                  </button>
+                  <label htmlFor={`dislikebuttonReply${replyIndex}`}>
+                    {reply.dislikes}
+                  </label>
                     </div>
                   )
                 })}</td>
