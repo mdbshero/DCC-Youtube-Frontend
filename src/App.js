@@ -11,7 +11,11 @@ import CommentSection from "./Components/CommentSection/CommentSection_bkup";
 
 
 function App() {
-const [videoID, setVideoID] = useState("aWzlQ2N6qqg")
+const [videoID, setVideoID] = useState(async (text='Doctor Strange in the Multiverse of Madness') => {
+  const KEY = process.env.REACT_APP_KEY
+  let videoSearch = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`)
+  setVideoID(videoSearch.data.items[0].id.videoId)
+  relatedVideos(videoSearch.data.items[0].id.videoId)})
 const [relatedVideoID, setRelatedVideoID] = useState([])
 const [comments, setComments] = useState([''])
 
@@ -25,6 +29,13 @@ const parseSearch = async (text) => {
   commentSniffer(videoSearch.data.items[0].id.videoId)
 }
 
+const videoIdSearch = async (text) => {
+  const KEY = process.env.REACT_APP_KEY
+  let videoSearch = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`)
+  setVideoID(videoSearch.data.items[0].id.videoId)
+  relatedVideos(videoSearch.data.items[0].id.videoId)
+  commentSniffer(videoSearch.data.items[0].id.videoId)
+}
 
 const commentSniffer = async (searchString = videoID) => {
   let text = []
@@ -32,10 +43,9 @@ const commentSniffer = async (searchString = videoID) => {
   for (let i = 0; i < commentSection.data.length; i++){
     text.push(commentSection.data[i].text)
   }
-  console.log(`text: ${text}`)
+  // console.log(`text: ${text}`) 
   setComments([...text])
 }
-
 
 
 //WHY ARE SET STATE VARIABLES SO SLOW
@@ -43,17 +53,17 @@ const relatedVideos = async (searchString = videoID) => {
   // setRelatedVideoID([])
   let test = []
   const KEY = process.env.REACT_APP_KEY
-  console.log(searchString)
+  // console.log(searchString)
   let relatedVideo = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${searchString}&type=video&key=${KEY}`)
-  console.log(relatedVideo)
+  // console.log(relatedVideo)
   for (let i = 0; i < (relatedVideo.data.items).length; i++){
     // console.log(relatedVideo.data.items[i].id.videoId)
     test.push(relatedVideo.data.items[i].id.videoId)
   }
-  console.log(test)
-  console.log(`Hullabloo : ${relatedVideoID}`)
+  // console.log(test)
+  // console.log(`Hullabloo : ${relatedVideoID}`)
   setRelatedVideoID([...test])
-  console.log(relatedVideoID)
+  // console.log(relatedVideoID)
 }
 
 
@@ -61,7 +71,7 @@ const relatedVideos = async (searchString = videoID) => {
     <div>
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
-      <RelatedVideos relatedVideoID={videoID}/>
+      <RelatedVideos relatedVideoID={relatedVideoID} videoIdSearch={videoIdSearch}/>
       <CommentSection videoId={videoID} commentSniffer={commentSniffer} comments={comments}/>
     </div>
   );
