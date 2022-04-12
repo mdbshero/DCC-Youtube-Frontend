@@ -20,7 +20,7 @@ function App() {
   );
   const [relatedVideoID, setRelatedVideoID] = useState([]);
   // const [comments, setComments] = useState([''])
-  const [comments, setComments] = useState([{}]);
+  const [comments, setComments] = useState([]);
 
   ///WHEN YOU SEARCH FOR "DAFT" or "DAFT PUNK" it will return a channel first, which causes it to break.
   //Add proper functionality to prevent this
@@ -51,25 +51,23 @@ function App() {
       `http://localhost:3001/api/${searchString}`
     );
     for (let i = 0; i < commentSection.data.length; i++) {
-      let replyInfo = [];
       text.push({
         text: commentSection.data[i].text,
         key: commentSection.data[i]._id,
-        videoId: commentSection.data[i].videoId,
-        replies: commentSection.data[i].replies.map((entry) => {
-           replyInfo.push({
-            text: entry.text,
-            likes: entry.likes,
-            dislikes: entry.dislikes,
-          });
-          return replyInfo;
-        }),
+          videoId: commentSection.data[i].videoId,
+          replies: commentSection.data[i].replies.map((entry) => {
+              return ({
+              text: entry.text,
+              likes: entry.likes,
+              dislikes: entry.dislikes,
+            });
+          }),
         likes: commentSection.data[i].likes,
         dislikes: commentSection.data[i].dislikes,
       });
       // objComments.push(commentSection.data[i]._id)
     }
-    // console.log(`text: ${text}`)
+    // console.log(`text: ${JSON.stringify(text)}`)
     setComments([...text]);
     // setCommentList([...objComments])
     // console.log(objComments)
@@ -103,6 +101,7 @@ function App() {
         relatedVideoID={relatedVideoID}
         videoIdSearch={videoIdSearch}
       />
+      {/* {console.log(`PRE-COMMENTS: ${JSON.stringify(comments)}`)} */}
       <CommentSection
         videoId={videoID}
         commentSniffer={commentSniffer}

@@ -114,6 +114,7 @@ const CommentSection = (props) => {
           </tr>
         </thead>
         <tbody>
+          {/* {console.log(`COMMENTs: ${JSON.stringify(props.comments)}`)} */}
           {props.comments.map((comment, index) => {
             return (
               <tr key={index}>
@@ -136,8 +137,9 @@ const CommentSection = (props) => {
                     {comment.dislikes}
                   </label>
                 </td>
-                {console.log(JSON.stringify(comment))}
+                {console.log(`COMMENT: ${JSON.stringify(comment.replies)}`)}
                 <td>{comment.replies.map((reply, replyIndex) =>{
+                    // {console.log(JSON.stringify(reply))}
                   return (
                     <div key={replyIndex}>
                       {reply.text}
