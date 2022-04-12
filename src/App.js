@@ -51,11 +51,19 @@ function App() {
       `http://localhost:3001/api/${searchString}`
     );
     for (let i = 0; i < commentSection.data.length; i++) {
+      let replyInfo = [];
       text.push({
         text: commentSection.data[i].text,
         key: commentSection.data[i]._id,
-        videoId:commentSection.data[i].videoId,
-        replies: commentSection.data[i].replies.map((entry) => {return entry.text}),
+        videoId: commentSection.data[i].videoId,
+        replies: commentSection.data[i].replies.map((entry) => {
+           replyInfo.push({
+            text: entry.text,
+            likes: entry.likes,
+            dislikes: entry.dislikes,
+          });
+          return replyInfo;
+        }),
         likes: commentSection.data[i].likes,
         dislikes: commentSection.data[i].dislikes,
       });

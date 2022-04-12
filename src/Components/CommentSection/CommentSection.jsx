@@ -8,7 +8,6 @@ const CommentSection = (props) => {
   const [reply, setReply] = useState();
   // const [comments, setComments] = useState([''])
   // const [comments, setComments] = useState()
-    
 
   // const commentSniffer = async () => {
   //   let text = []
@@ -20,29 +19,28 @@ const CommentSection = (props) => {
   //   setComments([...text])
   // }
 
-  
   useEffect(() => {
-    props.commentSniffer()
-  }, [])
+    props.commentSniffer();
+  }, []);
 
-
-function handleComments(text){
-}
+  function handleComments(text) {}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const addComment = {
       text: newComment,
-      videoId: props.videoId
+      videoId: props.videoId,
     };
 
-    await axios.post("http://localhost:3001/api/", addComment).then((response) => {
-      console.log(response.status);
-      console.log(response.data.token);
-    });
+    await axios
+      .post("http://localhost:3001/api/", addComment)
+      .then((response) => {
+        console.log(response.status);
+        console.log(response.data.token);
+      });
 
-    document.getElementById('commentInputField').value = ''
-    props.commentSniffer()
+    document.getElementById("commentInputField").value = "";
+    props.commentSniffer();
   };
 
   const handleSubmitReply = async (e, commentId) => {
@@ -51,50 +49,61 @@ function handleComments(text){
       text: reply,
     };
 
-    await axios.post(`http://localhost:3001/api/${commentId}/replies`, addReply).then((response) => {
-      console.log(response.status);
-      console.log(response.data.token);
-    });
-
-    document.getElementById('replyInputField').value = ''
-    props.commentSniffer()
-  };
-
-
-  const handleLikes = async (event,comment) => {
-    event.preventDefault()
-    console.log(JSON.stringify(comment))
-      let newLikes = {text:comment.text,
-        videoId:comment.videoId,
-        likes:comment.likes += 1}
-
-      await axios.put(`http://localhost:3001/api/${comment.key}`, newLikes).then((response) => {
+    await axios
+      .post(`http://localhost:3001/api/${commentId}/replies`, addReply)
+      .then((response) => {
         console.log(response.status);
         console.log(response.data.token);
-        props.commentSniffer()
       });
 
+    document.getElementById("replyInputField").value = "";
+    props.commentSniffer();
+  };
 
-  }
+  const handleLikes = async (event, comment) => {
+    event.preventDefault();
+    console.log(JSON.stringify(comment));
+    let newLikes = {
+      text: comment.text,
+      videoId: comment.videoId,
+      likes: (comment.likes += 1),
+    };
 
-  const handleDislikes = async (event,comment) => {
-    event.preventDefault()
-    console.log("TEST TEST TEST")
-    let newDislikes = {text:comment.text,
-      videoId:comment.videoId,
-      dislikes:comment.dislikes += 1}
-      console.log(JSON.stringify(newDislikes))
-    await axios.put(`http://localhost:3001/api/${comment.key}`, newDislikes).then((response) => {
-      console.log(response.status);
-      console.log(response.data.token);
-      props.commentSniffer()
-    });
-  }
+    await axios
+      .put(`http://localhost:3001/api/${comment.key}`, newLikes)
+      .then((response) => {
+        console.log(response.status);
+        console.log(response.data.token);
+        props.commentSniffer();
+      });
+  };
+
+  const handleDislikes = async (event, comment) => {
+    event.preventDefault();
+    console.log("TEST TEST TEST");
+    let newDislikes = {
+      text: comment.text,
+      videoId: comment.videoId,
+      dislikes: (comment.dislikes += 1),
+    };
+    console.log(JSON.stringify(newDislikes));
+    await axios
+      .put(`http://localhost:3001/api/${comment.key}`, newDislikes)
+      .then((response) => {
+        console.log(response.status);
+        console.log(response.data.token);
+        props.commentSniffer();
+      });
+  };
 
   return (
     <div>
       <div>
-        <AddComment comment={newComment} setNewComment={setNewComment} handleSubmit={handleSubmit} />
+        <AddComment
+          comment={newComment}
+          setNewComment={setNewComment}
+          handleSubmit={handleSubmit}
+        />
       </div>
       <table>
         <thead>
@@ -106,12 +115,45 @@ function handleComments(text){
         </thead>
         <tbody>
           {props.comments.map((comment, index) => {
-           return <tr key={index}>
-             <td>{comment.text}     <button name={`likebutton${index}`} onClick={(event) =>handleLikes(event, comment)}>/\</button><label htmlFor={`likebutton${index}`}>{comment.likes}</label><button name={`dislikebutton${index}`} onClick={(event) => handleDislikes(event,comment)}>\/</button><label htmlFor={`dislikebutton${index}`}>{comment.dislikes}</label></td>
-             {/* {console.log(comment)} */}
-             <td>{comment.replies}</td>
-             <td> <AddReply handleSubmitReply={handleSubmitReply} setReply={setReply} index={comment.key} /> </td>
-             </tr>;
+            return (
+              <tr key={index}>
+                <td>
+                  {comment.text}{" "}
+                  <button
+                    name={`likebutton${index}`}
+                    onClick={(event) => handleLikes(event, comment)}
+                  >
+                    /\
+                  </button>
+                  <label htmlFor={`likebutton${index}`}>{comment.likes}</label>
+                  <button
+                    name={`dislikebutton${index}`}
+                    onClick={(event) => handleDislikes(event, comment)}
+                  >
+                    \/
+                  </button>
+                  <label htmlFor={`dislikebutton${index}`}>
+                    {comment.dislikes}
+                  </label>
+                </td>
+                {console.log(JSON.stringify(comment))}
+                <td>{comment.replies.map((reply, replyIndex) =>{
+                  return (
+                    <div key={replyIndex}>
+                      {reply.text}
+                    </div>
+                  )
+                })}</td>
+                <td>
+                  {" "}
+                  <AddReply
+                    handleSubmitReply={handleSubmitReply}
+                    setReply={setReply}
+                    index={comment.key}
+                  />{" "}
+                </td>
+              </tr>
+            );
           })}
         </tbody>
       </table>
