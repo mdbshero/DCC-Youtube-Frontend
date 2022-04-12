@@ -5,7 +5,7 @@ import axios from "axios";
 
 const CommentSection = (props) => {
   const [newComment, setNewComment] = useState();
-  const [newReply, setNewReply] = useState();
+  const [reply, setReply] = useState();
   // const [comments, setComments] = useState([''])
   // const [comments, setComments] = useState()
     
@@ -45,8 +45,19 @@ function handleComments(text){
     props.commentSniffer()
   };
 
-  const handleSubmitReply = async (e) => {
+  const handleSubmitReply = async (e, commentId) => {
     e.preventDefault();
+    const addReply = {
+      text: reply,
+    };
+
+    await axios.post(`http://localhost:3001/api/${commentId}/replies`, addReply).then((response) => {
+      console.log(response.status);
+      console.log(response.data.token);
+    });
+
+    document.getElementById('replyInputField').value = ''
+    props.commentSniffer()
   };
 
   return (
@@ -65,7 +76,7 @@ function handleComments(text){
           {props.comments.map((comment, index) => {
            return <tr key={index}>
              <td>{comment.text}</td>
-             <td> <AddReply handleSubmitReply={handleSubmitReply} index={comment.key} /> </td>
+             <td> <AddReply handleSubmitReply={handleSubmitReply} setReply={setReply} index={comment.key} /> </td>
              </tr>;
           })}
         </tbody>

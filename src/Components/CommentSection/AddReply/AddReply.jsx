@@ -1,16 +1,16 @@
 const AddReply = (props) => {
   return (
     <div>
-      <form onSubmit={(e) => props.handleSubmitReply(e)}>
+      <form onSubmit={(e) => props.handleSubmitReply(e, props.index)}>
         <div>
           <input
             type="text"
             placeholder="Reply"
             id="replyInputField"
-            onChange={(e) => props.setNewReply(e.target.value)}
+            onChange={(e) => props.setReply(e.target.value)}
           />
         </div>
-        <button type="submit" id="submitReplyButton" onClick={(e) => console.log(props.index)}>
+        <button type="submit" id="submitReplyButton">
           Reply
         </button>
       </form>

@@ -15,11 +15,11 @@ const [videoID, setVideoID] = useState(async (text='Doctor Strange in the Multiv
   const KEY = process.env.REACT_APP_KEY
   let videoSearch = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`)
   setVideoID(videoSearch.data.items[0].id.videoId)
-  relatedVideos(videoSearch.data.items[0].id.videoId)})
+  relatedVideos(videoSearch.data.items[0].id.videoId)
+  commentSniffer(videoSearch.data.items[0].id.videoId)})
 const [relatedVideoID, setRelatedVideoID] = useState([])
 // const [comments, setComments] = useState([''])
 const [comments, setComments] = useState([{}])
-const [commentList, setCommentList] =useState()
 
 ///WHEN YOU SEARCH FOR "DAFT" or "DAFT PUNK" it will return a channel first, which causes it to break. 
 //Add proper functionality to prevent this
