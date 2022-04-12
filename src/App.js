@@ -17,7 +17,8 @@ const [videoID, setVideoID] = useState(async (text='Doctor Strange in the Multiv
   setVideoID(videoSearch.data.items[0].id.videoId)
   relatedVideos(videoSearch.data.items[0].id.videoId)})
 const [relatedVideoID, setRelatedVideoID] = useState([])
-const [comments, setComments] = useState([''])
+// const [comments, setComments] = useState([''])
+const [comments, setComments] = useState([{}])
 const [commentList, setCommentList] =useState()
 
 ///WHEN YOU SEARCH FOR "DAFT" or "DAFT PUNK" it will return a channel first, which causes it to break. 
@@ -40,16 +41,17 @@ const videoIdSearch = async (text) => {
 
 const commentSniffer = async (searchString = videoID) => {
   let text = []
-  let objComments = []
+  // let objComments = []
   let commentSection = await axios.get(`http://localhost:3001/api/${searchString}`)
   for (let i = 0; i < commentSection.data.length; i++){
-    text.push(commentSection.data[i].text)
-    objComments.push(commentSection.data[i]._id)
+    text.push({text:commentSection.data[i].text,
+    key:commentSection.data[i]._id})
+    // objComments.push(commentSection.data[i]._id)
   }
   // console.log(`text: ${text}`) 
   setComments([...text])
-  setCommentList([...objComments])
-  console.log(objComments)
+  // setCommentList([...objComments])
+  // console.log(objComments)
 
 }
 
@@ -77,13 +79,8 @@ const relatedVideos = async (searchString = videoID) => {
     <div>
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
-<<<<<<< HEAD
-      <RelatedVideos relatedVideoID={videoID}/>
-      <CommentSection videoId={videoID} commentSniffer={commentSniffer} comments={comments} commentList ={commentList}/>
-=======
       <RelatedVideos relatedVideoID={relatedVideoID} videoIdSearch={videoIdSearch}/>
       <CommentSection videoId={videoID} commentSniffer={commentSniffer} comments={comments}/>
->>>>>>> 63ba511b7d20cef95fc0a5c52f51e83bf2bfe4a6
     </div>
   );
 }

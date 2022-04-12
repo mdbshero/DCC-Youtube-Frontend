@@ -64,8 +64,8 @@ function handleComments(text){
         <tbody>
           {props.comments.map((comment, index) => {
            return <tr key={index}>
-             <td>{comment}</td>
-             <td> <AddReply handleSubmitReply={handleSubmitReply} index ={index} /> </td>
+             <td>{comment.text}</td>
+             <td> <AddReply handleSubmitReply={handleSubmitReply} index={comment.key} /> </td>
              </tr>;
           })}
         </tbody>
