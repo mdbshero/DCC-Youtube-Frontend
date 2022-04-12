@@ -70,12 +70,15 @@ function handleComments(text){
           <tr>
             <th>Comments</th>
             <th>Replies</th>
+            <th>Add replies</th>
           </tr>
         </thead>
         <tbody>
           {props.comments.map((comment, index) => {
            return <tr key={index}>
              <td>{comment.text}</td>
+             {console.log(comment)}
+             <td>{comment.replies}</td>
              <td> <AddReply handleSubmitReply={handleSubmitReply} setReply={setReply} index={comment.key} /> </td>
              </tr>;
           })}
