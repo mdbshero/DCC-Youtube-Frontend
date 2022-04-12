@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AddComment from "./AddComment/AddComment";
+import AddReply from "./AddReply/AddReply";
 import axios from "axios";
 
 const CommentSection = (props) => {
   const [newComment, setNewComment] = useState();
+  const [newReply, setNewReply] = useState();
   // const [comments, setComments] = useState([''])
   // const [comments, setComments] = useState()
     
@@ -43,6 +45,10 @@ function handleComments(text){
     props.commentSniffer()
   };
 
+  const handleSubmitReply = async (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       <div>
@@ -52,13 +58,15 @@ function handleComments(text){
         <thead>
           <tr>
             <th>Comments</th>
+            <th>Replies</th>
           </tr>
         </thead>
         <tbody>
-          {/* {comments && comments.map((comment, index) => { */}
           {props.comments.map((comment, index) => {
-           return <tr key={index}><td>{comment}</td></tr>;
-          //  {console.log("MAking it here as well")}
+           return <tr key={index}>
+             <td>{comment}</td>
+             <td> <AddReply handleSubmitReply={handleSubmitReply} index ={index} /> </td>
+             </tr>;
           })}
         </tbody>
       </table>

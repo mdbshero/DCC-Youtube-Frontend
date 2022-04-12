@@ -14,6 +14,7 @@ function App() {
 const [videoID, setVideoID] = useState("aWzlQ2N6qqg")
 const [relatedVideoID, setRelatedVideoID] = useState([])
 const [comments, setComments] = useState([''])
+const [commentList, setCommentList] =useState()
 
 ///WHEN YOU SEARCH FOR "DAFT" or "DAFT PUNK" it will return a channel first, which causes it to break. 
 //Add proper functionality to prevent this
@@ -28,12 +29,17 @@ const parseSearch = async (text) => {
 
 const commentSniffer = async (searchString = videoID) => {
   let text = []
+  let objComments = []
   let commentSection = await axios.get(`http://localhost:3001/api/${searchString}`)
   for (let i = 0; i < commentSection.data.length; i++){
     text.push(commentSection.data[i].text)
+    objComments.push(commentSection.data[i]._id)
   }
   console.log(`text: ${text}`)
   setComments([...text])
+  setCommentList([...objComments])
+  console.log(objComments)
+
 }
 
 
@@ -62,7 +68,7 @@ const relatedVideos = async (searchString = videoID) => {
       <SearchBar parseSearch={parseSearch}/>
       <VideoPlayer videoId={videoID}/>
       <RelatedVideos relatedVideoID={videoID}/>
-      <CommentSection videoId={videoID} commentSniffer={commentSniffer} comments={comments}/>
+      <CommentSection videoId={videoID} commentSniffer={commentSniffer} comments={comments} commentList ={commentList}/>
     </div>
   );
 }
