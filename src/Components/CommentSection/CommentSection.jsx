@@ -96,16 +96,20 @@ const CommentSection = (props) => {
       });
   };
 
-  const handleLikesReply = async (event, comment,reply) => {
+  const handleLikesReply = async (event, comment, reply) => {
     event.preventDefault();
     let newLikes = {
       text: reply.text,
       likes: (reply.likes += 1),
+      dislikes: reply.dislikes,
     };
-    console.log(newLikes)
+    console.log(newLikes);
 
     await axios
-      .put(`http://localhost:3001/api/${comment.key}/replies/${reply.id}`, newLikes)
+      .put(
+        `http://localhost:3001/api/${comment.key}/replies/${reply.id}`,
+        newLikes
+      )
       .then((response) => {
         console.log(response.status);
         console.log(response.data.token);
@@ -113,14 +117,18 @@ const CommentSection = (props) => {
       });
   };
 
-  const handleDislikesReply = async (event, comment,reply) => {
+  const handleDislikesReply = async (event, comment, reply) => {
     event.preventDefault();
     let newDislikes = {
       text: reply.text,
       dislikes: (reply.dislikes += 1),
+      likes: reply.likes,
     };
     await axios
-      .put(`http://localhost:3001/api/${comment.key}/replies/${reply.id}`, newDislikes)
+      .put(
+        `http://localhost:3001/api/${comment.key}/replies/${reply.id}`,
+        newDislikes
+      )
       .then((response) => {
         console.log(response.status);
         console.log(response.data.token);
@@ -130,14 +138,16 @@ const CommentSection = (props) => {
 
   return (
     <div>
-      <div>
-        <AddComment
-          comment={newComment}
-          setNewComment={setNewComment}
-          handleSubmit={handleSubmit}
-        />
+      <div className="navbar navbar-light bg-light">
+        <div className="form-inline">
+          <AddComment
+            comment={newComment}
+            setNewComment={setNewComment}
+            handleSubmit={handleSubmit}
+          />
+        </div>
       </div>
-      <table>
+      <table className="table">
         <thead>
           <tr>
             <th>Comments</th>
@@ -146,52 +156,75 @@ const CommentSection = (props) => {
           </tr>
         </thead>
         <tbody>
-          {/* {console.log(`COMMENTs: ${JSON.stringify(props.comments)}`)} */}
           {props.comments.map((comment, index) => {
             return (
               <tr key={index}>
                 <td>
-                  {comment.text}{" "}
-                  <button
-                    name={`likebutton${index}`}
-                    onClick={(event) => handleLikes(event, comment)}
-                  >
-                    /\
-                  </button>
-                  <label htmlFor={`likebutton${index}`}>{comment.likes}</label>
-                  <button
-                    name={`dislikebutton${index}`}
-                    onClick={(event) => handleDislikes(event, comment)}
-                  >
-                    \/
-                  </button>
-                  <label htmlFor={`dislikebutton${index}`}>
-                    {comment.dislikes}
-                  </label>
+                  <h5>{comment.text}</h5>
+                  <div>
+                    <button
+                      className="btn btn-success btn-sm"
+                      name={`likebutton${index}`}
+                      onClick={(event) => handleLikes(event, comment)}
+                    >
+                      /\
+                    </button>
+                    <label htmlFor={`likebutton${index}`}>
+                      <h5>{comment.likes}</h5>
+                    </label>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      name={`dislikebutton${index}`}
+                      onClick={(event) => handleDislikes(event, comment)}
+                    >
+                      \/
+                    </button>
+                    <label htmlFor={`dislikebutton${index}`}>
+                      <h5>{comment.dislikes}</h5>
+                    </label>
+                  </div>
                 </td>
-                <td>{comment.replies.map((reply, replyIndex) =>{
-                // {console.log(`COMMENT: ${JSON.stringify(comment.key)} AND \n REPLY: ${JSON.stringify(reply.id)}`)}
-                    // {console.log(JSON.stringify(reply))}
-                  return (
-                    <div key={replyIndex}>
-                      {reply.text}            
-                       <button
-                    name={`likebuttonReply${replyIndex}`}
-                    onClick={(event) => handleLikesReply(event, comment,reply)}>
-                    /\
-                  </button>
-                  <label htmlFor={`likebuttonReply${replyIndex}`}>{reply.likes}</label>
-                  <button
-                    name={`dislikebuttonReply${replyIndex}`}
-                    onClick={(event) => handleDislikesReply(event, comment,reply)}>
-                    \/
-                  </button>
-                  <label htmlFor={`dislikebuttonReply${replyIndex}`}>
-                    {reply.dislikes}
-                  </label>
-                    </div>
-                  )
-                })}</td>
+                <td>
+                  {comment.replies.map((reply, replyIndex) => {
+                    return (
+                      <div key={replyIndex}>
+                        <h6>
+                        {reply.text}
+                        </h6>
+                        <div>
+                          <button
+                            className="btn btn-success btn-sm"
+                            name={`likebuttonReply${replyIndex}`}
+                            onClick={(event) =>
+                              handleLikesReply(event, comment, reply)
+                            }
+                          >
+                            /\
+                          </button>
+                          <label htmlFor={`likebuttonReply${replyIndex}`}>
+                            <h6>
+                            {reply.likes}
+                            </h6>
+                          </label>
+                          <button
+                            className="btn btn-danger btn-sm"
+                            name={`dislikebuttonReply${replyIndex}`}
+                            onClick={(event) =>
+                              handleDislikesReply(event, comment, reply)
+                            }
+                          >
+                            \/
+                          </button>
+                          <label htmlFor={`dislikebuttonReply${replyIndex}`}>
+                            <h6>
+                            {reply.dislikes}
+                            </h6>
+                          </label>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </td>
                 <td>
                   {" "}
                   <AddReply

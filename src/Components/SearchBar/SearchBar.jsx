@@ -11,12 +11,12 @@ function handleSubmit(event){
     props.parseSearch(query)
 }
     return ( 
-        <div>
-            <input type="text" name="Search" id="searchBarText" onKeyUp={function(event) {if (event.key == 'Enter'){
+        <form className="d-flex">
+            <input className="form-control me-sm-2" placeholder="Enter Search" type="text" name="Search" id="searchBarText" onKeyUp={function(event) {if (event.key == 'Enter'){
                 handleSubmit(event)
             }}}/>
-            <button type="submit" onClick={(event) => handleSubmit(event)}>Search</button>
-        </div>
+            <button className="btn btn-secondary my-2 my-sm-0" type="submit" onClick={(event) => handleSubmit(event)}>Search</button>
+        </form>
      );
 }
  

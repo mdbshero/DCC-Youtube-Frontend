@@ -54,15 +54,15 @@ function App() {
       text.push({
         text: commentSection.data[i].text,
         key: commentSection.data[i]._id,
-          videoId: commentSection.data[i].videoId,
-          replies: commentSection.data[i].replies.map((entry) => {
-              return ({
-              text: entry.text,
-              likes: entry.likes,
-              dislikes: entry.dislikes,
-              id:entry._id
-            });
-          }),
+        videoId: commentSection.data[i].videoId,
+        replies: commentSection.data[i].replies.map((entry) => {
+          return {
+            text: entry.text,
+            likes: entry.likes,
+            dislikes: entry.dislikes,
+            id: entry._id,
+          };
+        }),
         likes: commentSection.data[i].likes,
         dislikes: commentSection.data[i].dislikes,
       });
@@ -95,19 +95,38 @@ function App() {
   };
 
   return (
-    <div>
-      <SearchBar parseSearch={parseSearch} />
-      <VideoPlayer videoId={videoID} />
-      <RelatedVideos
-        relatedVideoID={relatedVideoID}
-        videoIdSearch={videoIdSearch}
-      />
-      {/* {console.log(`PRE-COMMENTS: ${JSON.stringify(comments)}`)} */}
-      <CommentSection
-        videoId={videoID}
-        commentSniffer={commentSniffer}
-        comments={comments}
-      />
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col form-inline">
+          <div className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="navbar-brand pl-5">FakeTube</div>
+            <div className="collapse navbar-collapse" id="navbarColor01">
+              <SearchBar parseSearch={parseSearch} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col"></div>
+        <div className="col mt-5">
+          <VideoPlayer videoId={videoID} />
+        </div>
+        <div className="col">
+          <RelatedVideos
+            relatedVideoID={relatedVideoID}
+            videoIdSearch={videoIdSearch}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <CommentSection
+            videoId={videoID}
+            commentSniffer={commentSniffer}
+            comments={comments}
+          />
+        </div>
+      </div>
     </div>
   );
 }
