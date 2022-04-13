@@ -99,7 +99,7 @@ function App() {
           <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
             <div class="navbar-brand">FakeTube</div>
-            <div className="collapse navbar-collapse" id="navbarColor01">
+            <div>
               <SearchBar parseSearch={parseSearch} />
             </div>
             </div>
