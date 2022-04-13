@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AddComment from "./AddComment/AddComment";
 import AddReply from "./AddReply/AddReply";
 import axios from "axios";
+import './CommentSection.css'
 
 const CommentSection = (props) => {
   const [newComment, setNewComment] = useState();
@@ -169,7 +170,7 @@ const CommentSection = (props) => {
                     >
                       /\
                     </button>
-                    <label htmlFor={`likebutton${index}`}>
+                    <label htmlFor={`likebutton${index}`} className="labelLikes">
                       <h5>{comment.likes}</h5>
                     </label>
                     <button
@@ -179,7 +180,7 @@ const CommentSection = (props) => {
                     >
                       \/
                     </button>
-                    <label htmlFor={`dislikebutton${index}`}>
+                    <label htmlFor={`dislikebutton${index}`} className="labelLikes">
                       <h5>{comment.dislikes}</h5>
                     </label>
                   </div>
@@ -201,7 +202,7 @@ const CommentSection = (props) => {
                           >
                             /\
                           </button>
-                          <label htmlFor={`likebuttonReply${replyIndex}`}>
+                          <label htmlFor={`likebuttonReply${replyIndex}`} className="labelLikesReply">
                             <h6>
                             {reply.likes}
                             </h6>
@@ -215,7 +216,7 @@ const CommentSection = (props) => {
                           >
                             \/
                           </button>
-                          <label htmlFor={`dislikebuttonReply${replyIndex}`}>
+                          <label htmlFor={`dislikebuttonReply${replyIndex}`} className="labelLikesReply">
                             <h6>
                             {reply.dislikes}
                             </h6>
