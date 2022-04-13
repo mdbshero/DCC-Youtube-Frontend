@@ -13,7 +13,7 @@ const RelatedVideos = (props) => {
   // console.log(`Related Videos: ${props.relatedVideoID}`)
   return (
     <div>
-      <table className="table table-striped">
+      <table>
           <thead>
               <tr>
                   <th>
@@ -27,7 +27,7 @@ const RelatedVideos = (props) => {
             return (
                 <tr>
                     <td>
-              <button type="button" onClick={(e) => handleClick(e, relatedVid)}>
+              <button className="btn btn-outline-danger border" type="button" onClick={(e) => handleClick(e, relatedVid)}>
                 <img
                   id="ytplayer"
                   SameSite="None"

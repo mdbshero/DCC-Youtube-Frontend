@@ -96,16 +96,14 @@ function App() {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col form-inline">
-          <div className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="navbar-brand pl-5">FakeTube</div>
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container-fluid">
+            <div class="navbar-brand">FakeTube</div>
             <div className="collapse navbar-collapse" id="navbarColor01">
               <SearchBar parseSearch={parseSearch} />
             </div>
-          </div>
-        </div>
-      </div>
+            </div>
+          </nav>
       <div className="row">
         <div className="col"></div>
         <div className="col mt-5">
