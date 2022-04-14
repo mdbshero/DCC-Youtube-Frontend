@@ -5,22 +5,31 @@ import VideoPlayer from "./Components/VideoPlayer/VideoPlayer";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import RelatedVideos from "./Components/RelatedVideos/RelatedVideos";
 import CommentSection from "./Components/CommentSection/CommentSection";
+import TitleAndDescription from "./Components/TitleAndDescription/TitleAndDescription";
 
 function App() {
   const [videoID, setVideoID] = useState(
     async (text = "Doctor Strange in the Multiverse of Madness") => {
       const KEY = process.env.REACT_APP_KEY;
       let videoSearch = await axios.get(
-        `https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`
+        `https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}&part=snippet`
       );
       setVideoID(videoSearch.data.items[0].id.videoId);
       relatedVideos(videoSearch.data.items[0].id.videoId);
       commentSniffer(videoSearch.data.items[0].id.videoId);
+      let pullSnippet = await axios.get(
+        `https://www.googleapis.com/youtube/v3/videos?id=${videoSearch.data.items[0].id.videoId}&key=${KEY}&part=snippet`
+      )
+      console.log(pullSnippet.data.items[0].snippet.description)
+      setTitle(pullSnippet.data.items[0].snippet.title)
+      setDescription(pullSnippet.data.items[0].snippet.description)
     }
   );
   const [relatedVideoID, setRelatedVideoID] = useState([]);
   // const [comments, setComments] = useState([''])
   const [comments, setComments] = useState([]);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('')
 
   ///WHEN YOU SEARCH FOR "DAFT" or "DAFT PUNK" it will return a channel first, which causes it to break.
   //Add proper functionality to prevent this
@@ -32,17 +41,14 @@ function App() {
     setVideoID(videoSearch.data.items[0].id.videoId);
     relatedVideos(videoSearch.data.items[0].id.videoId);
     commentSniffer(videoSearch.data.items[0].id.videoId);
+    let pullSnippet = await axios.get(
+      `https://www.googleapis.com/youtube/v3/videos?id=${videoSearch.data.items[0].id.videoId}&key=${KEY}&part=snippet`
+    )
+    console.log(pullSnippet.data.items[0].snippet.description)
+    setTitle(pullSnippet.data.items[0].snippet.title)
+    setDescription(pullSnippet.data.items[0].snippet.description)
   };
 
-  const videoIdSearch = async (text) => {
-    const KEY = process.env.REACT_APP_KEY;
-    let videoSearch = await axios.get(
-      `https://www.googleapis.com/youtube/v3/search?q=${text}&key=${KEY}`
-    );
-    setVideoID(videoSearch.data.items[0].id.videoId);
-    relatedVideos(videoSearch.data.items[0].id.videoId);
-    commentSniffer(videoSearch.data.items[0].id.videoId);
-  };
 
   const commentSniffer = async (searchString = videoID) => {
     let text = [];
@@ -76,22 +82,16 @@ function App() {
 
   //WHY ARE SET STATE VARIABLES SO SLOW
   const relatedVideos = async (searchString = videoID) => {
-    // setRelatedVideoID([])
     let test = [];
     const KEY = process.env.REACT_APP_KEY;
-    // console.log(searchString)
     let relatedVideo = await axios.get(
       `https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${searchString}&type=video&key=${KEY}`
     );
     // console.log(relatedVideo)
     for (let i = 0; i < relatedVideo.data.items.length; i++) {
-      // console.log(relatedVideo.data.items[i].id.videoId)
       test.push(relatedVideo.data.items[i].id.videoId);
     }
-    // console.log(test)
-    // console.log(`Hullabloo : ${relatedVideoID}`)
     setRelatedVideoID([...test]);
-    // console.log(relatedVideoID)
   };
 
   return (
@@ -112,9 +112,12 @@ function App() {
         <div className="col">
           <RelatedVideos
             relatedVideoID={relatedVideoID}
-            videoIdSearch={videoIdSearch}
+            videoIdSearch={parseSearch}
           />
         </div>
+      </div>
+      <div>
+        <TitleAndDescription title={title} description={description}/>
       </div>
       <div className="row">
         <div className="col">

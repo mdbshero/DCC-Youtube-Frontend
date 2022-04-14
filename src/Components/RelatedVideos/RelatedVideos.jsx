@@ -32,7 +32,8 @@ const RelatedVideos = (props) => {
                   id="ytplayer"
                   SameSite="None"
                   type="text/html"
-                  src={`https://img.youtube.com/vi/${relatedVid}/default.jpg`}
+                  // src={`https://img.youtube.com/vi/${relatedVid}/default.jpg`}
+                  src={`https://i.ytimg.com/vi/${relatedVid}/default.jpg`}
                   alt="./Sad.png"
                   frameBorder="0"
                 />
