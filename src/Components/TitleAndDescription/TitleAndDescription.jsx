@@ -13,7 +13,7 @@ const TitleAndDescription = (props) => {
 
     let testStart = text.replace(textReg, function (x) {
         // console.log(x)
-        return `<a href=${x}>${x}</a>`
+        return `<a href=${x} target="_blank">${x}</a>`
         // console.log(x)
         return <a href={`${x}`}>{`${x}`}</a>
     })
@@ -32,8 +32,8 @@ const TitleAndDescription = (props) => {
     }
 
     return (  
-        <div>
-            <h2>{props.title}</h2>
+        <div className='container border border-3'>
+            <h2><u>{props.title}</u></h2>
             <p id="descriptionBox"></p>
             {parseString()}
         </div>
