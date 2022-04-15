@@ -20,7 +20,7 @@ function App() {
       let pullSnippet = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?id=${videoSearch.data.items[0].id.videoId}&key=${KEY}&part=snippet`
       )
-      console.log(pullSnippet.data.items[0].snippet.description)
+      // console.log(pullSnippet.data.items[0].snippet.description)
       setTitle(pullSnippet.data.items[0].snippet.title)
       setDescription(pullSnippet.data.items[0].snippet.description)
     }
@@ -44,10 +44,14 @@ function App() {
     let pullSnippet = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?id=${videoSearch.data.items[0].id.videoId}&key=${KEY}&part=snippet`
     )
-    console.log(pullSnippet.data.items[0].snippet.description)
+    // console.log(pullSnippet.data.items[0].snippet.description)
     setTitle(pullSnippet.data.items[0].snippet.title)
     setDescription(pullSnippet.data.items[0].snippet.description)
   };
+
+  useEffect(() =>{
+    console.log('Testing')
+  },[])
 
 
   const commentSniffer = async (searchString = videoID) => {
