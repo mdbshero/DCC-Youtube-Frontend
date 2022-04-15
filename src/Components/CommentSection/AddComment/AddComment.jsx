@@ -9,10 +9,15 @@ const AddComment = (props) => {
             placeholder="Comment"
             id="commentInputField"
             onChange={(e) => props.setNewComment(e.target.value)}
-          />{` `}
-        <button className="btn btn-dark" type="submit" id="submitCommentButton">
-          Create
-        </button>
+          />
+          {` `}
+          <button
+            className="btn btn-dark"
+            type="submit"
+            id="submitCommentButton"
+          >
+            Create
+          </button>
         </div>
       </form>
     </div>

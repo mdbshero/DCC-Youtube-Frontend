@@ -2,23 +2,11 @@ import React, { useEffect, useState } from "react";
 import AddComment from "./AddComment/AddComment";
 import AddReply from "./AddReply/AddReply";
 import axios from "axios";
-import './CommentSection.css'
+import "./CommentSection.css";
 
 const CommentSection = (props) => {
   const [newComment, setNewComment] = useState();
   const [reply, setReply] = useState();
-  // const [comments, setComments] = useState([''])
-  // const [comments, setComments] = useState()
-
-  // const commentSniffer = async () => {
-  //   let text = []
-  //   let commentSection = await axios.get(`http://localhost:3001/api/${props.videoId}`)
-  //   for (let i = 0; i < commentSection.data.length; i++){
-  //     text.push(commentSection.data[i].text)
-  //   }
-  //   console.log(`text: ${text}`)
-  //   setComments([...text])
-  // }
 
   useEffect(() => {
     props.commentSniffer();
@@ -170,7 +158,10 @@ const CommentSection = (props) => {
                     >
                       /\
                     </button>
-                    <label htmlFor={`likebutton${index}`} className="labelLikes">
+                    <label
+                      htmlFor={`likebutton${index}`}
+                      className="labelLikes"
+                    >
                       <h5>{comment.likes}</h5>
                     </label>
                     <button
@@ -180,7 +171,10 @@ const CommentSection = (props) => {
                     >
                       \/
                     </button>
-                    <label htmlFor={`dislikebutton${index}`} className="labelLikes">
+                    <label
+                      htmlFor={`dislikebutton${index}`}
+                      className="labelLikes"
+                    >
                       <h5>{comment.dislikes}</h5>
                     </label>
                   </div>
@@ -189,9 +183,7 @@ const CommentSection = (props) => {
                   {comment.replies.map((reply, replyIndex) => {
                     return (
                       <div key={replyIndex}>
-                        <h6>
-                        {reply.text}
-                        </h6>
+                        <h6>{reply.text}</h6>
                         <div>
                           <button
                             className="btn btn-success btn-sm"
@@ -202,10 +194,11 @@ const CommentSection = (props) => {
                           >
                             /\
                           </button>
-                          <label htmlFor={`likebuttonReply${replyIndex}`} className="labelLikesReply">
-                            <h6>
-                            {reply.likes}
-                            </h6>
+                          <label
+                            htmlFor={`likebuttonReply${replyIndex}`}
+                            className="labelLikesReply"
+                          >
+                            <h6>{reply.likes}</h6>
                           </label>
                           <button
                             className="btn btn-danger btn-sm"
@@ -216,10 +209,11 @@ const CommentSection = (props) => {
                           >
                             \/
                           </button>
-                          <label htmlFor={`dislikebuttonReply${replyIndex}`} className="labelLikesReply">
-                            <h6>
-                            {reply.dislikes}
-                            </h6>
+                          <label
+                            htmlFor={`dislikebuttonReply${replyIndex}`}
+                            className="labelLikesReply"
+                          >
+                            <h6>{reply.dislikes}</h6>
                           </label>
                         </div>
                       </div>

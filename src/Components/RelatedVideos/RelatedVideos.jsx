@@ -10,39 +10,40 @@ const RelatedVideos = (props) => {
   }
 
   //Occasionally the first related video will display as a blank default image due to the video being "no longer available"
-  // console.log(`Related Videos: ${props.relatedVideoID}`)
   return (
     <div>
       <table>
-          <thead>
-              <tr>
-                  <th>
-                      Related Videos
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-        {props.relatedVideoID.map((relatedVid) => {
-          try {
-            return (
+        <thead>
+          <tr>
+            <th>Related Videos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.relatedVideoID.map((relatedVid) => {
+            try {
+              return (
                 <tr>
-                    <td>
-              <button className="btn btn-outline-danger border" type="button" onClick={(e) => handleClick(e, relatedVid)}>
-                <img
-                  id="ytplayer"
-                  SameSite="None"
-                  type="text/html"
-                  // src={`https://img.youtube.com/vi/${relatedVid}/default.jpg`}
-                  src={`https://i.ytimg.com/vi/${relatedVid}/default.jpg`}
-                  alt="./Sad.png"
-                  frameBorder="0"
-                />
-              </button>
-              </td>
-              </tr>
-            );
-          } catch (error) {}
-        })}
+                  <td>
+                    <button
+                      className="btn btn-outline-danger border"
+                      type="button"
+                      onClick={(e) => handleClick(e, relatedVid)}
+                    >
+                      <img
+                        id="ytplayer"
+                        SameSite="None"
+                        type="text/html"
+                        // src={`https://img.youtube.com/vi/${relatedVid}/default.jpg`}
+                        src={`https://i.ytimg.com/vi/${relatedVid}/default.jpg`}
+                        alt="./Sad.png"
+                        frameBorder="0"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              );
+            } catch (error) {}
+          })}
         </tbody>
         {/* <button onClick={(e) => {handleClick(e)}}><iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.relatedVideoID[0]}/default.jpg`} alt="./Sad.png" frameBorder="0"/></button>
             <button onClick={(e) => {handleClick(e)}}><iframe id="ytplayer" type="text/html"  src={`https://img.youtube.com/vi/${props.relatedVideoID[1]}/default.jpg`} alt="./Sad.png" frameBorder="0"/></button>

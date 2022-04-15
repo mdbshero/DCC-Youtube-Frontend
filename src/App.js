@@ -20,13 +20,11 @@ function App() {
       let pullSnippet = await axios.get(
         `https://www.googleapis.com/youtube/v3/videos?id=${videoSearch.data.items[0].id.videoId}&key=${KEY}&part=snippet`
       );
-      // console.log(pullSnippet.data.items[0].snippet.description)
       setTitle(pullSnippet.data.items[0].snippet.title);
       setDescription(pullSnippet.data.items[0].snippet.description);
     }
   );
   const [relatedVideoID, setRelatedVideoID] = useState([]);
-  // const [comments, setComments] = useState([''])
   const [comments, setComments] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -44,7 +42,6 @@ function App() {
     let pullSnippet = await axios.get(
       `https://www.googleapis.com/youtube/v3/videos?id=${videoSearch.data.items[0].id.videoId}&key=${KEY}&part=snippet`
     );
-    // console.log(pullSnippet.data.items[0].snippet.description)
     setTitle(pullSnippet.data.items[0].snippet.title);
     setDescription(pullSnippet.data.items[0].snippet.description);
   };
@@ -55,7 +52,6 @@ function App() {
 
   const commentSniffer = async (searchString = videoID) => {
     let text = [];
-    // let objComments = []
     let commentSection = await axios.get(
       `http://localhost:3001/api/${searchString}`
     );
@@ -75,22 +71,17 @@ function App() {
         likes: commentSection.data[i].likes,
         dislikes: commentSection.data[i].dislikes,
       });
-      // objComments.push(commentSection.data[i]._id)
     }
-    // console.log(`text: ${JSON.stringify(text)}`)
+
     setComments([...text]);
-    // setCommentList([...objComments])
-    // console.log(objComments)
   };
 
-  //WHY ARE SET STATE VARIABLES SO SLOW
   const relatedVideos = async (searchString = videoID) => {
     let test = [];
     const KEY = process.env.REACT_APP_KEY;
     let relatedVideo = await axios.get(
       `https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${searchString}&type=video&key=${KEY}`
     );
-    // console.log(relatedVideo)
     for (let i = 0; i < relatedVideo.data.items.length; i++) {
       test.push(relatedVideo.data.items[i].id.videoId);
     }

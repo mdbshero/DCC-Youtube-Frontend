@@ -1,6 +1,3 @@
-// import React, { useState } from 'react';
-
-
 const VideoPlayer = (props) => {
   return (
     <div className="embed-responsive embed-responsive-16by9">
